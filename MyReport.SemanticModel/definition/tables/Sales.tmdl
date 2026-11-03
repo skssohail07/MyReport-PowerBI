@@ -11,7 +11,7 @@ table Sales
 		lineageTag: 7a1c0b2d-0001-4e00-8000-000000000102
 
 	measure 'Avg Unit Price' = DIVIDE ( [Sales Revenue], [Units Sold] )
-		formatString: #,0.00
+		formatString: #,0.000
 		lineageTag: 7a1c0b2d-0001-4e00-8000-000000000103
 
 	column Date
