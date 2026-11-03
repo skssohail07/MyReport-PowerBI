@@ -1,11 +1,6 @@
 table Expenses
 	lineageTag: 7a1c0b2d-0002-4e00-8000-000000000001
 
-	/// Spend from the detailed Expenses sheet
-	measure 'Expense Amount' = SUM ( Expenses[Amount] )
-		formatString: #,0
-		lineageTag: 7a1c0b2d-0002-4e00-8000-000000000101
-
 	column Month
 		dataType: string
 		isHidden

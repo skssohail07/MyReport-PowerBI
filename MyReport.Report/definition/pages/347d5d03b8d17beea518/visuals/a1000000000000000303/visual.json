@@ -39,13 +39,13 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Expenses"
+                      "Entity": "MEA"
                     }
                   },
                   "Property": "Expense Amount"
                 }
               },
-              "queryRef": "Expenses.Expense Amount",
+              "queryRef": "MEA.Expense Amount",
               "nativeQueryRef": "Expense Amount"
             }
           ]

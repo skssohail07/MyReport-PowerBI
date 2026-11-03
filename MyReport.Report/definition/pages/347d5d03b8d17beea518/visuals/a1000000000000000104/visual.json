@@ -19,14 +19,14 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Monthly Summary"
+                      "Entity": "MEA"
                     }
                   },
                   "Property": "Target Achievement %"
                 }
               },
               "nativeQueryRef": "Target Achievement %",
-              "queryRef": "Monthly Summary.Target Achievement %"
+              "queryRef": "MEA.Target Achievement %"
             }
           ]
         }
