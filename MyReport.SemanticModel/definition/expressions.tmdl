@@ -1,0 +1,26 @@
+/// URL of the SharePoint team site that holds the finance workbook
+expression SharePointSiteUrl = "https://xebiagroup.sharepoint.com/sites/RPAImplementation" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 3f6d2a1e-8b4c-4c1d-9a6e-1f2b3c4d5e01
+
+	annotation PBI_ResultType = Text
+
+/// File name of the finance workbook in Shared Documents/Power BI Dashboard/ROI Dashboard
+expression FinanceFileName = "Simple_Finance_Dataset.xlsx" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 3f6d2a1e-8b4c-4c1d-9a6e-1f2b3c4d5e02
+
+	annotation PBI_ResultType = Text
+
+expression 'Finance Workbook' =
+		let
+		    Source = SharePoint.Contents(SharePointSiteUrl, [ApiVersion = 15]),
+		    Library = Source{[Name = "Shared Documents"]}[Content],
+		    PowerBIDashboard = Library{[Name = "Power BI Dashboard"]}[Content],
+		    ROIDashboard = PowerBIDashboard{[Name = "ROI Dashboard"]}[Content],
+		    File = ROIDashboard{[Name = FinanceFileName]}[Content],
+		    Workbook = Excel.Workbook(File, null, true)
+		in
+		    Workbook
+	lineageTag: 3f6d2a1e-8b4c-4c1d-9a6e-1f2b3c4d5e03
+
+	annotation PBI_ResultType = Table
+

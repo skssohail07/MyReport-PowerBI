@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "a1000000000000000100",
+  "position": {
+    "x": 20,
+    "y": 72,
+    "z": 3000,
+    "height": 100,
+    "width": 235,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Monthly Summary"
+                    }
+                  },
+                  "Property": "Total Revenue"
+                }
+              },
+              "nativeQueryRef": "Total Revenue",
+              "queryRef": "Monthly Summary.Total Revenue"
+            }
+          ]
+        }
+      }
+    },
+    "visualType": "card",
+    "drillFilterOtherVisuals": true
+  }
+}

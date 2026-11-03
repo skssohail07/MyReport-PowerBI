@@ -1,0 +1,57 @@
+/// Shared month dimension that filters Sales, Expenses and Monthly Summary together
+table Month
+	lineageTag: 7a1c0b2d-0004-4e00-8000-000000000001
+
+	column Month
+		dataType: string
+		lineageTag: 7a1c0b2d-0004-4e00-8000-000000000011
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month]
+		sortByColumn: Month_Num
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_Num
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 7a1c0b2d-0004-4e00-8000-000000000012
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month_Num]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: string
+		lineageTag: 7a1c0b2d-0004-4e00-8000-000000000013
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Quarter]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Month = calculated
+		mode: import
+		source =
+				DATATABLE (
+				    "Month", STRING,
+				    "Month_Num", INTEGER,
+				    "Quarter", STRING,
+				    {
+				        { "January", 1, "Q1" },
+				        { "February", 2, "Q1" },
+				        { "March", 3, "Q1" },
+				        { "April", 4, "Q2" },
+				        { "May", 5, "Q2" },
+				        { "June", 6, "Q2" },
+				        { "July", 7, "Q3" },
+				        { "August", 8, "Q3" },
+				        { "September", 9, "Q3" },
+				        { "October", 10, "Q4" },
+				        { "November", 11, "Q4" },
+				        { "December", 12, "Q4" }
+				    }
+				)
+

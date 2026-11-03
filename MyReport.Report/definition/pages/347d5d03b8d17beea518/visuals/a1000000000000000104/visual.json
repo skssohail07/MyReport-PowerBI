@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "a1000000000000000104",
+  "position": {
+    "x": 1024,
+    "y": 72,
+    "z": 7000,
+    "height": 100,
+    "width": 235,
+    "tabOrder": 7000
+  },
+  "visual": {
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Monthly Summary"
+                    }
+                  },
+                  "Property": "Target Achievement %"
+                }
+              },
+              "nativeQueryRef": "Target Achievement %",
+              "queryRef": "Monthly Summary.Target Achievement %"
+            }
+          ]
+        }
+      }
+    },
+    "visualType": "card",
+    "drillFilterOtherVisuals": true
+  }
+}

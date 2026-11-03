@@ -1,0 +1,105 @@
+table 'Monthly Summary'
+	lineageTag: 7a1c0b2d-0003-4e00-8000-000000000001
+
+	measure 'Total Revenue' = SUM ( 'Monthly Summary'[Revenue] )
+		formatString: #,0
+		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000101
+
+	measure 'Total Expenses' = SUM ( 'Monthly Summary'[Expenses] )
+		formatString: #,0
+		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000102
+
+	measure 'Total Profit' = SUM ( 'Monthly Summary'[Profit] )
+		formatString: #,0
+		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000103
+
+	measure 'Revenue Target' = SUM ( 'Monthly Summary'[Target] )
+		formatString: #,0
+		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000104
+
+	measure 'Profit Margin %' = DIVIDE ( [Total Profit], [Total Revenue] )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000105
+
+	measure 'Target Achievement %' = DIVIDE ( [Total Revenue], [Revenue Target] )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000106
+
+	measure 'Revenue vs Target' = [Total Revenue] - [Revenue Target]
+		formatString: #,0;-#,0;#,0
+		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000107
+
+	column Month
+		dataType: string
+		isHidden
+		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000011
+		summarizeBy: none
+		sourceColumn: Month
+		sortByColumn: Month_Num
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_Num
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000012
+		summarizeBy: none
+		sourceColumn: Month_Num
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: string
+		isHidden
+		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000013
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Revenue
+		dataType: double
+		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000014
+		summarizeBy: sum
+		sourceColumn: Revenue
+
+		annotation SummarizationSetBy = Automatic
+
+	column Expenses
+		dataType: double
+		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000015
+		summarizeBy: sum
+		sourceColumn: Expenses
+
+		annotation SummarizationSetBy = Automatic
+
+	column Profit
+		dataType: double
+		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000016
+		summarizeBy: sum
+		sourceColumn: Profit
+
+		annotation SummarizationSetBy = Automatic
+
+	column Target
+		dataType: double
+		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000017
+		summarizeBy: sum
+		sourceColumn: Target
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Monthly Summary' = m
+		mode: import
+		source =
+				let
+				    Source = #"Finance Workbook",
+				    Sheet = Source{[Item = "Monthly Summary", Kind = "Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"Month", type text}, {"Month_Num", Int64.Type}, {"Quarter", type text}, {"Revenue", type number}, {"Expenses", type number}, {"Profit", type number}, {"Target", type number}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

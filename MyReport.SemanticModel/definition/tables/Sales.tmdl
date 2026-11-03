@@ -1,0 +1,99 @@
+table Sales
+	lineageTag: 7a1c0b2d-0001-4e00-8000-000000000001
+
+	/// Revenue from the detailed Sales sheet
+	measure 'Sales Revenue' = SUM ( Sales[Revenue] )
+		formatString: #,0
+		lineageTag: 7a1c0b2d-0001-4e00-8000-000000000101
+
+	measure 'Units Sold' = SUM ( Sales[Units_Sold] )
+		formatString: #,0
+		lineageTag: 7a1c0b2d-0001-4e00-8000-000000000102
+
+	measure 'Avg Unit Price' = DIVIDE ( [Sales Revenue], [Units Sold] )
+		formatString: #,0.00
+		lineageTag: 7a1c0b2d-0001-4e00-8000-000000000103
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7a1c0b2d-0001-4e00-8000-000000000011
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Month
+		dataType: string
+		isHidden
+		lineageTag: 7a1c0b2d-0001-4e00-8000-000000000012
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: string
+		isHidden
+		lineageTag: 7a1c0b2d-0001-4e00-8000-000000000013
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 7a1c0b2d-0001-4e00-8000-000000000014
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product
+		dataType: string
+		lineageTag: 7a1c0b2d-0001-4e00-8000-000000000015
+		summarizeBy: none
+		sourceColumn: Product
+
+		annotation SummarizationSetBy = Automatic
+
+	column Units_Sold
+		dataType: int64
+		formatString: 0
+		lineageTag: 7a1c0b2d-0001-4e00-8000-000000000016
+		summarizeBy: sum
+		sourceColumn: Units_Sold
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unit_Price
+		dataType: double
+		lineageTag: 7a1c0b2d-0001-4e00-8000-000000000017
+		summarizeBy: none
+		sourceColumn: Unit_Price
+
+		annotation SummarizationSetBy = Automatic
+
+	column Revenue
+		dataType: double
+		lineageTag: 7a1c0b2d-0001-4e00-8000-000000000018
+		summarizeBy: sum
+		sourceColumn: Revenue
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Sales = m
+		mode: import
+		source =
+				let
+				    Source = #"Finance Workbook",
+				    Sheet = Source{[Item = "Sales", Kind = "Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"Date", type date}, {"Month", type text}, {"Quarter", type text}, {"Region", type text}, {"Product", type text}, {"Units_Sold", Int64.Type}, {"Unit_Price", type number}, {"Revenue", type number}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

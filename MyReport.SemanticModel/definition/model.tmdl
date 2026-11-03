@@ -1,0 +1,22 @@
+model Model
+	culture: en-IN
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-IN
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode","MCP-PBIModeling"]
+
+annotation PBI_QueryOrder = ["SharePointSiteUrl","FinanceFileName","Finance Workbook","Sales","Expenses","Monthly Summary"]
+
+ref table Sales
+ref table Expenses
+ref table 'Monthly Summary'
+ref table Month
+
+ref cultureInfo en-IN
+

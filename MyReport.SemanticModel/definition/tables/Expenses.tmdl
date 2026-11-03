@@ -1,0 +1,74 @@
+table Expenses
+	lineageTag: 7a1c0b2d-0002-4e00-8000-000000000001
+
+	/// Spend from the detailed Expenses sheet
+	measure 'Expense Amount' = SUM ( Expenses[Amount] )
+		formatString: #,0
+		lineageTag: 7a1c0b2d-0002-4e00-8000-000000000101
+
+	column Month
+		dataType: string
+		isHidden
+		lineageTag: 7a1c0b2d-0002-4e00-8000-000000000011
+		summarizeBy: none
+		sourceColumn: Month
+		sortByColumn: Month_Num
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_Num
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 7a1c0b2d-0002-4e00-8000-000000000012
+		summarizeBy: none
+		sourceColumn: Month_Num
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: string
+		isHidden
+		lineageTag: 7a1c0b2d-0002-4e00-8000-000000000013
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Department
+		dataType: string
+		lineageTag: 7a1c0b2d-0002-4e00-8000-000000000014
+		summarizeBy: none
+		sourceColumn: Department
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: 7a1c0b2d-0002-4e00-8000-000000000015
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Amount
+		dataType: double
+		lineageTag: 7a1c0b2d-0002-4e00-8000-000000000016
+		summarizeBy: sum
+		sourceColumn: Amount
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Expenses = m
+		mode: import
+		source =
+				let
+				    Source = #"Finance Workbook",
+				    Sheet = Source{[Item = "Expenses", Kind = "Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"Month", type text}, {"Month_Num", Int64.Type}, {"Quarter", type text}, {"Department", type text}, {"Category", type text}, {"Amount", type number}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

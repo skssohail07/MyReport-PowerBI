@@ -1,0 +1,12 @@
+relationship 5b9e1c40-0001-4a00-9000-000000000001
+	fromColumn: Sales.Month
+	toColumn: Month.Month
+
+relationship 5b9e1c40-0002-4a00-9000-000000000002
+	fromColumn: Expenses.Month
+	toColumn: Month.Month
+
+relationship 5b9e1c40-0003-4a00-9000-000000000003
+	fromColumn: 'Monthly Summary'.Month
+	toColumn: Month.Month
+
