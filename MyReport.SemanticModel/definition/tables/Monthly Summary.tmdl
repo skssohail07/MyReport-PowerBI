@@ -1,34 +1,6 @@
 table 'Monthly Summary'
 	lineageTag: 7a1c0b2d-0003-4e00-8000-000000000001
 
-	measure 'Total Revenue' = SUM ( 'Monthly Summary'[Revenue] )
-		formatString: #,0
-		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000101
-
-	measure 'Total Expenses' = SUM ( 'Monthly Summary'[Expenses] )
-		formatString: #,0
-		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000102
-
-	measure 'Total Profit' = SUM ( 'Monthly Summary'[Profit] )
-		formatString: #,0
-		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000103
-
-	measure 'Revenue Target' = SUM ( 'Monthly Summary'[Target] )
-		formatString: #,0
-		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000104
-
-	measure 'Profit Margin %' = DIVIDE ( [Total Profit], [Total Revenue] )
-		formatString: 0.0%;-0.0%;0.0%
-		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000105
-
-	measure 'Target Achievement %' = DIVIDE ( [Total Revenue], [Revenue Target] )
-		formatString: 0.0%;-0.0%;0.0%
-		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000106
-
-	measure 'Revenue vs Target' = [Total Revenue] - [Revenue Target]
-		formatString: #,0;-#,0;#,0
-		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000107
-
 	column Month
 		dataType: string
 		isHidden

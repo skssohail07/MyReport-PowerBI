@@ -19,14 +19,14 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Monthly Summary"
+                      "Entity": "MEA"
                     }
                   },
                   "Property": "Total Profit"
                 }
               },
               "nativeQueryRef": "Total Profit",
-              "queryRef": "Monthly Summary.Total Profit"
+              "queryRef": "MEA.Total Profit"
             }
           ]
         }

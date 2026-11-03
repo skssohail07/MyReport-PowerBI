@@ -1,0 +1,75 @@
+/// Measure table: holds every measure in the model, grouped by display folder
+table MEA
+	lineageTag: 7a1c0b2d-0005-4e00-8000-000000000001
+
+	/// Revenue from the detailed Sales sheet
+	measure 'Sales Revenue' = SUM ( Sales[Revenue] )
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: 7a1c0b2d-0001-4e00-8000-000000000101
+
+	measure 'Units Sold' = SUM ( Sales[Units_Sold] )
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: 7a1c0b2d-0001-4e00-8000-000000000102
+
+	measure 'Avg Unit Price' = DIVIDE ( [Sales Revenue], [Units Sold] )
+		formatString: #,0.000
+		displayFolder: Sales
+		lineageTag: 7a1c0b2d-0001-4e00-8000-000000000103
+
+	/// Spend from the detailed Expenses sheet
+	measure 'Expense Amount' = SUM ( Expenses[Amount] )
+		formatString: #,0
+		displayFolder: Expenses
+		lineageTag: 7a1c0b2d-0002-4e00-8000-000000000101
+
+	measure 'Total Revenue' = SUM ( 'Monthly Summary'[Revenue] )
+		formatString: #,0
+		displayFolder: Monthly Summary
+		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000101
+
+	measure 'Total Expenses' = SUM ( 'Monthly Summary'[Expenses] )
+		formatString: #,0
+		displayFolder: Monthly Summary
+		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000102
+
+	measure 'Total Profit' = SUM ( 'Monthly Summary'[Profit] )
+		formatString: #,0
+		displayFolder: Monthly Summary
+		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000103
+
+	measure 'Revenue Target' = SUM ( 'Monthly Summary'[Target] )
+		formatString: #,0
+		displayFolder: Monthly Summary
+		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000104
+
+	measure 'Profit Margin %' = DIVIDE ( [Total Profit], [Total Revenue] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Monthly Summary
+		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000105
+
+	measure 'Target Achievement %' = DIVIDE ( [Total Revenue], [Revenue Target] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Monthly Summary
+		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000106
+
+	measure 'Revenue vs Target' = [Total Revenue] - [Revenue Target]
+		formatString: #,0;-#,0;#,0
+		displayFolder: Monthly Summary
+		lineageTag: 7a1c0b2d-0003-4e00-8000-000000000107
+
+	column Placeholder
+		dataType: string
+		isHidden
+		isNameInferred
+		lineageTag: 7a1c0b2d-0005-4e00-8000-000000000011
+		summarizeBy: none
+		sourceColumn: [Placeholder]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition MEA = calculated
+		mode: import
+		source = DATATABLE ( "Placeholder", STRING, { { "" } } )
+

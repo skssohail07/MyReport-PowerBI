@@ -1,19 +1,6 @@
 table Sales
 	lineageTag: 7a1c0b2d-0001-4e00-8000-000000000001
 
-	/// Revenue from the detailed Sales sheet
-	measure 'Sales Revenue' = SUM ( Sales[Revenue] )
-		formatString: #,0
-		lineageTag: 7a1c0b2d-0001-4e00-8000-000000000101
-
-	measure 'Units Sold' = SUM ( Sales[Units_Sold] )
-		formatString: #,0
-		lineageTag: 7a1c0b2d-0001-4e00-8000-000000000102
-
-	measure 'Avg Unit Price' = DIVIDE ( [Sales Revenue], [Units Sold] )
-		formatString: #,0.000
-		lineageTag: 7a1c0b2d-0001-4e00-8000-000000000103
-
 	column Date
 		dataType: dateTime
 		formatString: Long Date

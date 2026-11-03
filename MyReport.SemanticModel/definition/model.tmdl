@@ -17,6 +17,7 @@ ref table Sales
 ref table Expenses
 ref table 'Monthly Summary'
 ref table Month
+ref table MEA
 
 ref cultureInfo en-IN
 
